@@ -267,29 +267,30 @@ http://www.tooplate.com/view/2090-kinetic
                       <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                         aria-labelledby="nav-home-tab">
 
-                        <form class="outside_form" action="insertdelegates.php" method="POST">
+                        <!-- FORM BEGINS-->
+                        <form class="outside_form">
 
                           <div class="form-group">
                             <label class="form-label" for="exampleFormControlInput1">Name</label>
-                            <input type="text" name="Name" class="form-control shadow-none" id="exampleFormControlInput1"
+                            <input type="text" name="Name" class="form-control shadow-none" id="form-name"
                               placeholder="Name" required>
                           </div>
 
                           <div class="form-group">
                             <label class="form-label" for="exampleFormControlInput1">Email</label>
-                            <input type="email" name="Email" class="form-control shadow-none" id="exampleFormControlInput1"
+                            <input type="email" name="Email" class="form-control shadow-none" id="form-email"
                               placeholder="Email" required>
                           </div>
 
                           <div class="form-group">
                             <label class="form-label" for="exampleFormControlInput1">Phone Number</label>
-                            <input type="text" name="PhoneNumber" class="form-control shadow-none" id="exampleFormControlInput1"
+                            <input type="text" name="PhoneNumber" class="form-control shadow-none" id="form-phone"
                               placeholder="Phone Number" required>
                           </div>
 
                           <div class="form-group">
                             <label class="form-label" for="exampleFormControlInput1">College/School</label>
-                            <input type="text" name="College" class="form-control shadow-none" id="exampleFormControlInput1"
+                            <input type="text" name="College" class="form-control shadow-none" id="form-college"
                               placeholder="College/School" required>
                           </div>
 
@@ -308,7 +309,6 @@ http://www.tooplate.com/view/2090-kinetic
                           <div class="form-group">
                             <label class="form-label label-1" for="preference1">Delegate</label>
                             <select name="Country/Party1" class="form-control shadow-none" id="preference-options1">
-
                             </select>
                           </div>
 
@@ -353,38 +353,39 @@ http://www.tooplate.com/view/2090-kinetic
 
                           <div class="form-group">
                             <label class="form-label previous_nitmun" for="exampleFormControlTextarea1">Previous Experiences</label>
-                            <textarea name="PreviousExperiences" class="form-control shadow-none" placeholder="Previous Experiences" id="exampleFormControlTextarea1"
+                            <textarea name="PreviousExperiences" class="form-control shadow-none" placeholder="Previous Experiences" id="prev-exp"
                               rows="3"></textarea>
                           </div>
-
-                          <button type="submit" class="submit-button btn-block submit_button">Submit</button>
-
                         </form>
+
+                        <button onclick="sendResponses()" type="submit" class="submit-button btn-block submit_button">Submit</button>
+
+                        <!-- FORM ENDS -->
 
                       </div>
                       <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
-                        <form class="outside_form" action="insertip.php" method="POST">
+                        <form class="outside_form">
                           <div class="form-group">
                             <label class="form-label" for="exampleFormControlInput1">Name</label>
-                            <input name="Name" type="text" class="form-control shadow-none" id="exampleFormControlInput1"placeholder="Name" required>
+                            <input name="Name" type="text" class="form-control shadow-none" id="formname" placeholder="Name" required>
                           </div>
 
                           <div class="form-group">
                             <label class="form-label" for="exampleFormControlInput1">Email</label>
-                            <input name="Email" type="email" class="form-control shadow-none" id="exampleFormControlInput1"
+                            <input name="Email" type="email" class="form-control shadow-none" id="formemail"
                               placeholder="Email" required>
                           </div>
 
                           <div class="form-group">
                             <label class="form-label" for="exampleFormControlInput1">Phone Number</label>
-                            <input name="PhoneNumber" type="text" class="form-control shadow-none" id="exampleFormControlInput1"
+                            <input name="PhoneNumber" type="text" class="form-control shadow-none" id="formphone"
                               placeholder="Phone Number" required>
                           </div>
 
                           <div class="form-group">
                             <label class="form-label" for="exampleFormControlInput1">College/School</label>
-                            <input name="College" type="text" class="form-control shadow-none" id="exampleFormControlInput1"
+                            <input name="College" type="text" class="form-control shadow-none" id="formcollege"
                               placeholder="College/School" required>
                           </div>
 
@@ -447,12 +448,11 @@ http://www.tooplate.com/view/2090-kinetic
 
                           <div class="form-group">
                             <label class="form-label previous_nitmun" for="exampleFormControlTextarea1">Previous Experiences</label>
-                            <textarea name="PreviousExperiences" class="form-control shadow-none" placeholder="Previous Experiences" id="exampleFormControlTextarea1"></textarea>
+                            <textarea name="PreviousExperiences" class="form-control shadow-none" placeholder="Previous Experiences" id="prevexp"></textarea>
                           </div>
-
-                          <button type="submit" class="submit-button btn-block submit_button">Submit</button>
-
                         </form>
+                        <button onclick="sendResp()" type="submit" class="submit-button btn-block submit_button">Submit</button>
+
                       </div>
                     </div>
                   </div>
@@ -1123,6 +1123,59 @@ http://www.tooplate.com/view/2090-kinetic
   <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>
   <script src="js/timeline.js"></script>
+
+  <script>
+
+        async function sendResponses() {
+              fetch(`https://backend.lcnitd.co.in/api/register`, {
+                method: "POST",
+                headers: {
+              'Content-Type': 'application/json'
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            }, body: JSON.stringify({
+                name: document.getElementById("form-name").value,
+                email: document.getElementById("form-email").value,
+                phoneNumber: document.getElementById("form-phone").value,
+                institute: document.getElementById("form-college").value,
+                committee1: document.getElementById("preference1").value,
+                preference1: document.getElementById("preference-options1").value,
+                committee2: document.getElementById("preference2").value,
+                preference2: document.getElementById("preference-options2").value,
+                committee3: document.getElementById("preference3").value,
+                preference3: document.getElementById("preference-options3").value,
+                experience: document.getElementById("prev-exp").value,
+            })
+              }).then((response) => response.json())
+                  .then((json) => {
+                    alert(json.message)
+                  })
+            }
+
+            async function sendResp() {
+              fetch(`https://backend.lcnitd.co.in/api/register`, {
+                method: "POST",
+                headers: {
+              'Content-Type': 'application/json'
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            }, body: JSON.stringify({
+                name: document.getElementById("formname").value,
+                email: document.getElementById("formemail").value,
+                phoneNumber: document.getElementById("formphone").value,
+                institute: document.getElementById("formcollege").value,
+                committee1: document.getElementById("preference4").value,
+                preference1: document.getElementById("preference-options4").value,
+                committee2: document.getElementById("preference5").value,
+                preference2: document.getElementById("preference-options5").value,
+                committee3: document.getElementById("preference6").value,
+                preference3: document.getElementById("preference-options6").value,
+                experience: document.getElementById("prevexp").value,
+            })
+              }).then((response) => response.json())
+                  .then((json) => {
+                    alert(json.message)
+                  })
+            }
+  </script>
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
   <script>
